@@ -11,35 +11,50 @@ namespace ConsoleApp14
         static void Main(string[] args)
         {
             Random ran = new Random();
-            var a = ReadPos("a");
-            var b = ReadPos("b");
-            var c = ReadPos("c");
-            var k = ran.Next(a,b);
-            Console.WriteLine($"k is {k}");
+            var startPos = ReadPos("start position");
+            var endPos = ReadPos("end position");
+            var randomNum = Rand(ran, startPos, endPos);
+
+            var myNumber = ReadPos("you Number");
+            Console.WriteLine($"now k is {randomNum}");
             do
             {
-                if (k > c)
+                if (randomNum > myNumber)
                 {
-                    Console.WriteLine(k);
-                    Console.WriteLine("k > c");
-                    b = k;
-                    k = ran.Next(a, b);
+                    Console.WriteLine("computer number > my number");
+                    endPos = randomNum;
+                    randomNum = ran.Next(startPos, endPos);
 
-                    Console.WriteLine($"now k is {k}");
+                    Console.WriteLine($"now computer number is {randomNum}");
                 }
-                else if (k<c)
+                else if (randomNum < myNumber)
                 {
-                    Console.WriteLine(k);
-                    Console.WriteLine("k < c");
-                    a = k;
-                    k = ran.Next(a, b);
-                    Console.WriteLine($"now k is {k}");
+                    Console.WriteLine("computer number < my number");
+                    startPos = randomNum;
+                    randomNum = ran.Next(startPos, endPos);
+                    Console.WriteLine($"now computer number is {randomNum}");
                 }
-            } while (k != c);
-            Console.WriteLine($"You are write, it is {c}");
-            Console.WriteLine(k);
+            } while (randomNum != myNumber);
+            Console.WriteLine($"Computer is write, it is {myNumber}");
+            Console.WriteLine(randomNum);
 
             Console.Read();
+        }
+        static int Rand(Random rand, int startP, int endP)
+        {
+            int randomNum;
+            while (true)
+            {
+                try
+                {
+                    randomNum = rand.Next(startP, endP);
+                    return randomNum;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Bed input {ex.Message}, try again");
+                }
+            }
         }
         static int ReadPos(string posname)
         {
