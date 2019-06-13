@@ -11,12 +11,10 @@ namespace ConsoleApp14
         static void Main(string[] args)
         {
             Random ran = new Random();
-            var startPos = ReadPos("start position");
-            var endPos = ReadPos("end position");
-            var randomNum = Rand(ran, startPos, endPos);
-
+            int startPos, endPos;
+            var randomNum = Rand(ran, out startPos, out endPos);
             var myNumber = ReadPos("you Number");
-            Console.WriteLine($"now k is {randomNum}");
+            Console.WriteLine($"now computer number is {randomNum}");
             do
             {
                 if (randomNum > myNumber)
@@ -36,12 +34,13 @@ namespace ConsoleApp14
                 }
             } while (randomNum != myNumber);
             Console.WriteLine($"Computer is write, it is {myNumber}");
-            Console.WriteLine(randomNum);
 
             Console.Read();
         }
-        static int Rand(Random rand, int startP, int endP)
+        static int Rand(Random rand, out int startP, out int endP)
         {
+            startP = ReadPos("start position");
+            endP = ReadPos("end position");
             int randomNum;
             while (true)
             {
@@ -53,6 +52,8 @@ namespace ConsoleApp14
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Bed input {ex.Message}, try again");
+                    startP = ReadPos("start position");
+                    endP = ReadPos("end position");
                 }
             }
         }
