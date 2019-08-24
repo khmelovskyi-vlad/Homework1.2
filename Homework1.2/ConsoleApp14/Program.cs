@@ -11,8 +11,7 @@ namespace ConsoleApp14
         static void Main(string[] args)
         {
             Random ran = new Random();
-            int randomNum, startPos, endPos;
-            (randomNum, startPos, endPos) = Rand(ran);
+            (int randomNum, int startPos, int endPos) = Rand(ran);
             var myNumber = ReadPos("you Number");
             while (randomNum != myNumber)
             {
