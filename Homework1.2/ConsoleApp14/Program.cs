@@ -11,49 +11,42 @@ namespace ConsoleApp14
         static void Main(string[] args)
         {
             Random ran = new Random();
-            int startPos, endPos;
-            var randomNum = Rand(ran, out startPos, out endPos);
+            int randomNum, startPos, endPos;
+            (randomNum, startPos, endPos) = Rand(ran);
             var myNumber = ReadPos("you Number");
-            Console.WriteLine($"now computer number is {randomNum}");
-            do
+            while (randomNum != myNumber)
             {
+                Console.WriteLine($"now computer number is {randomNum}");
                 if (randomNum > myNumber)
                 {
                     Console.WriteLine("computer number > my number");
-                    endPos = randomNum;
-                    randomNum = ran.Next(startPos, endPos);
-
-                    Console.WriteLine($"now computer number is {randomNum}");
+                    endPos = randomNum-1;
                 }
                 else if (randomNum < myNumber)
                 {
                     Console.WriteLine("computer number < my number");
-                    startPos = randomNum;
-                    randomNum = ran.Next(startPos, endPos);
-                    Console.WriteLine($"now computer number is {randomNum}");
+                    startPos = randomNum+1;
                 }
-            } while (randomNum != myNumber);
+                randomNum = ran.Next(startPos, endPos);
+            } 
             Console.WriteLine($"Computer is write, it is {myNumber}");
 
             Console.Read();
         }
-        static int Rand(Random rand, out int startP, out int endP)
+        static (int randomNum, int startP, int endP) Rand(Random rand)
         {
-            startP = ReadPos("start position");
-            endP = ReadPos("end position");
-            int randomNum;
             while (true)
             {
+                int startP = ReadPos("start position");
+                int endP = ReadPos("end position");
                 try
                 {
-                    randomNum = rand.Next(startP, endP);
-                    return randomNum;
+                    var randomNum = rand.Next(startP, endP);
+                    return (randomNum, startP, endP);
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Bed input {ex.Message}, try again");
-                    startP = ReadPos("start position");
-                    endP = ReadPos("end position");
                 }
             }
         }
